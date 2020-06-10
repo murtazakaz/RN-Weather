@@ -1,134 +1,114 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, {Component, useState, useEffect, useCallback} from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import {color} from '../../theme';
 import {moderateScale} from 'react-native-size-matters';
 import {ScrollView} from 'react-native-gesture-handler';
-export default class DetailScreen extends Component {
-  wetherStatus(CurrentWether) {
-    switch (CurrentWether) {
-      case 'weather-mostly-cloud':
-        return (
-          <Image
-            style={styles.wetherImg}
-            source={require('assets/imgs/weather_mostly_cloud_medium.png')}
-          />
-        );
-      case 'weather-clouds':
-        return (
-          <Image
-            style={styles.wetherImg}
-            source={require('assets/imgs/weather-clouds_medium.png')}
-          />
-        );
-      case 'weather-cloud-thunder-rain':
-        return (
-          <Image
-            style={styles.wetherImg}
-            source={require('assets/imgs/weather-cloud-thunder-rain_medium.png')}
-          />
-        );
-      case 'weather-sun':
-        return (
-          <Image
-            style={styles.wetherImg}
-            source={require('assets/imgs/weather-sun_medium.png')}
-          />
-        );
-      default:
-        return null;
-    }
-  }
+import {useSelector, useDispatch} from 'react-redux';
+import moment from 'moment';
+import {_getWeatherByLocationHourly} from '../../services/weatherServices';
+import {storeWeatherHourly} from '../../store/actions';
+import {RenderByWeatherTypes} from './weatherIconsType';
+import {DetailStyle} from './DetailScreenStyles';
+export default function DetailScreen() {
+  const [loading, setLoading] = useState(false);
+  const weather = useSelector(state => state.weather);
+  const location = useSelector(state => state.location);
+  const weatherHourly = useSelector(state => state.weatherHourly);
+  const dispatch = useDispatch();
+  const [date, setDate] = useState(moment().format('MMM DD, YYYY'));
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => {}}>
-            <Image
-              style={styles.menuImg}
-              source={require('assets/imgs/menu_medium.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Image
-              style={styles.searchImg}
-              source={require('assets/imgs/search_medium.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        <ScrollView>
-          <View style={styles.content}>
-            <View style={styles.countryBox}>
-              <View style={styles.countryNameBox}>
-                <Text style={styles.title}>New York,</Text>
-                <Text style={styles.title}>United States</Text>
-                <Text style={styles.subTitle}>Oct 04, 2019</Text>
-              </View>
-              <View style={styles.countryImgBox}>
-                <Image
-                  style={styles.countryImg}
-                  source={require('assets/imgs/bg.png')}
-                />
-              </View>
+  useEffect(() => {
+    async function getWeatherHourly() {
+      let hourlyWeather = await _getWeatherByLocationHourly(location);
+      console.log('_getWeatherByLocationHourly', hourlyWeather);
+      setWeatherHourly(hourlyWeather);
+    }
+
+    getWeatherHourly();
+  }, []);
+
+  const setWeatherHourly = useCallback(
+    data => dispatch(storeWeatherHourly(data)),
+    [dispatch],
+  );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => {}}>
+          <Image
+            style={styles.menuImg}
+            source={require('assets/imgs/menu_medium.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {}}>
+          <Image
+            style={styles.searchImg}
+            source={require('assets/imgs/search_medium.png')}
+          />
+        </TouchableOpacity>
+      </View>
+      <ScrollView>
+        <View style={styles.content}>
+          <View style={styles.countryBox}>
+            <View style={styles.countryNameBox}>
+              <Text style={styles.title}>{` ${weather.name},`}</Text>
+              <Text style={styles.title}>{` ${weather.sys.country},`}</Text>
+              <Text style={styles.subTitle}>{date}</Text>
             </View>
-            <View style={styles.dayWeather}>
-              <View
-                style={[
-                  styles.wetherDetail,
-                  {backgroundColor: 'rgba(255, 255, 255, 0.1)'},
-                ]}>
-                <Text style={styles.wetherTimeText}>12:00</Text>
-                {this.wetherStatus('weather-clouds')}
-                <Text style={styles.wetherTemperature}>24</Text>
-              </View>
-              <View style={styles.wetherDetail}>
-                <Text style={styles.wetherTimeText}>12:00</Text>
-                {this.wetherStatus('weather-cloud-thunder-rain')}
-                <Text style={styles.wetherTemperature}>24</Text>
-              </View>
-              <View style={styles.wetherDetail}>
-                <Text style={styles.wetherTimeText}>12:00</Text>
-                {this.wetherStatus('weather-mostly-cloud')}
-                <Text style={styles.wetherTemperature}>24</Text>
-              </View>
-              <View style={styles.wetherDetail}>
-                <Text style={styles.wetherTimeText}>12:00</Text>
-                {this.wetherStatus('weather-sun')}
-                <Text style={styles.wetherTemperature}>24</Text>
-              </View>
-              <View style={styles.wetherDetail}>
-                <Text style={styles.wetherTimeText}>12:00</Text>
-                {this.wetherStatus('weather-clouds')}
-                <Text style={styles.wetherTemperature}>24</Text>
-              </View>
-            </View>
-            <View style={styles.additionalInfoBox}>
-              <Text style={styles.additionalTitle}>Additional Info</Text>
-              <View style={styles.additionalDetailBox}>
-                <View style={styles.additionalDetail}>
-                  <Text style={styles.additionalDetailSubTitle}>
-                    Precipitation
-                  </Text>
-                  <Text style={styles.additionalDetailText}>3%</Text>
-                </View>
-                <View style={styles.additionalDetail}>
-                  <Text style={styles.additionalDetailSubTitle}>Humidity</Text>
-                  <Text style={styles.additionalDetailText}>74%</Text>
-                </View>
-                <View style={styles.additionalDetail}>
-                  <Text style={styles.additionalDetailSubTitle}>Windly</Text>
-                  <Text style={styles.additionalDetailText}>18 km/h</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.temperatureBox}>
-              <Text style={styles.temperatureTitle}>Temperature</Text>
+            <View style={styles.countryImgBox}>
+              <Image
+                style={styles.countryImg}
+                source={require('assets/imgs/bg.png')}
+              />
             </View>
           </View>
-        </ScrollView>
-      </View>
-    );
-  }
+          <View style={styles.dayWeather}>
+            <FlatList
+              data={weatherHourly ? weatherHourly.daily : []}
+              numColumns={5}
+              renderItem={(item, index) => {
+                return <RenderByWeatherTypes data={item} index={index} />;
+              }}
+            />
+          </View>
+          <View style={styles.additionalInfoBox}>
+            <Text style={styles.additionalTitle}>Additional Info</Text>
+            <View style={styles.additionalDetailBox}>
+              <View style={styles.additionalDetail}>
+                <Text style={styles.additionalDetailSubTitle}>
+                  Precipitation
+                </Text>
+                <Text style={styles.additionalDetailText}>3%</Text>
+              </View>
+              <View style={styles.additionalDetail}>
+                <Text style={styles.additionalDetailSubTitle}>Humidity</Text>
+                <Text style={styles.additionalDetailText}>{`${
+                  weather.main.humidity
+                } %`}</Text>
+              </View>
+              <View style={styles.additionalDetail}>
+                <Text style={styles.additionalDetailSubTitle}>Windly</Text>
+                <Text style={styles.additionalDetailText}>{`${
+                  weather.wind.speed
+                } km/h`}</Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.temperatureBox}>
+            <Text style={styles.temperatureTitle}>Temperature</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -191,8 +171,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(15),
   },
   wetherDetail: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    justifyContent: 'space-evenly',
     height: moderateScale(80),
     borderRadius: moderateScale(20),
     flex: 1,

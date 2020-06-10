@@ -1,25 +1,15 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
-import {
-  LoginContainer,
-  CreateAccountContainer,
-  WelcomeScreen,
-} from '../screens';
+import {WelcomeScreen, DetailScreen} from '../screens';
 
 const AppNavigator = createStackNavigator(
   {
     Welcome: {
       screen: WelcomeScreen,
     },
-    Login: {
-      screen: LoginContainer,
-    },
-    CreateAccount: {
-      screen: CreateAccountContainer,
-      navigationOptions: {
-        headerTitle: 'Create Account',
-      },
+    Detail: {
+      screen: DetailScreen,
     },
   },
   {

@@ -1,44 +1,123 @@
-import React, {Component} from 'react';
-import {Text, View, ImageBackground, StyleSheet, Image} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, {Component, useState, useEffect, useCallback} from 'react';
+import {
+  Text,
+  View,
+  ImageBackground,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import {moderateScale} from 'react-native-size-matters';
 import {color} from '../../theme';
-//
-export default class WelcomeScreen extends Component {
-  render() {
-    return (
-      <ImageBackground
-        source={require('assets/imgs/bg.png')}
-        resizeMode="cover"
-        style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => {}}>
-            <Image
-              style={styles.closeImg}
-              source={require('assets/imgs/close.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.liveButton} onPress={() => {}}>
-            <Text style={styles.liveButtonText}>Live</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.content}>
-          <View style={styles.currentLocationBox}>
-            <Image
-              style={styles.currentLocationBoxImg}
-              source={require('assets/imgs/mark.png')}
-            />
-            <Text style={styles.currentLocationBoxText}>CURRENT LOCATION</Text>
-          </View>
-          <View>
-            <Text style={styles.heading}>New York,</Text>
-            <Text style={styles.heading}>United States</Text>
-          </View>
-        </View>
-      </ImageBackground>
-    );
+import {requestAndroidPermission} from '../../services/permissionService';
+import Geolocation from '@react-native-community/geolocation';
+import {_getWeatherByLocation} from '../../services/weatherServices';
+import {useSelector, useDispatch} from 'react-redux';
+import {storeWeather, updatelocation} from '../../store/actions';
+
+export default function WelcomeScreen() {
+  const {navigate} = useNavigation();
+  const [loading, setLoading] = useState(false);
+  const weather = useSelector(state => state.weather);
+  const location = useSelector(state => state.location);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function checkForPermissions() {
+      // You can await here
+      let isGranted = await requestAndroidPermission();
+      console.log('permission', isGranted);
+
+      if (isGranted) {
+        getCurrentLocation();
+      }
+    }
+    checkForPermissions();
+  }, []);
+
+  useEffect(() => {
+    async function getWeatherDetails() {
+      setLoading(true);
+      console.log('getWeatherDetails', location);
+      let weather = await _getWeatherByLocation(location);
+      console.log('_getWeatherByLocation', weather);
+      setLoading(false);
+      getWeather(weather);
+      // setWeather(weatherResponse);
+    }
+    getWeatherDetails();
+  }, [location]);
+
+  function getCurrentLocation() {
+    Geolocation.getCurrentPosition(location => {
+      getLocation(location);
+    });
   }
+
+  const getWeather = useCallback(data => dispatch(storeWeather(data)), [
+    dispatch,
+  ]);
+
+  const getLocation = useCallback(data => dispatch(updatelocation(data)), [
+    dispatch,
+  ]);
+
+  function renderLocation() {
+    console.log('renderLocation', weather);
+    if (loading) {
+      return <Text style={styles.heading}>Loading</Text>;
+    } else if (!weather) {
+      return <Text style={styles.heading}>Couldn't get current location</Text>;
+    } else {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            navigate('Detail');
+          }}>
+          <Text style={styles.heading}>{` ${weather.name},`}</Text>
+          <Text style={styles.heading}>{` ${weather.sys.country}`}</Text>
+        </TouchableOpacity>
+      );
+    }
+  }
+
+  return (
+    <ImageBackground
+      source={require('assets/imgs/bg.png')}
+      resizeMode="cover"
+      style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => {
+            getCurrentLocation();
+          }}>
+          <Image
+            style={styles.closeImg}
+            source={require('assets/imgs/close.png')}
+          />
+        </TouchableOpacity>
+
+        <View style={styles.liveButton}>
+          <Text style={styles.liveButtonText}>Live</Text>
+        </View>
+      </View>
+
+      <View style={styles.content}>
+        <TouchableOpacity style={styles.currentLocationBox}>
+          <Image
+            style={styles.currentLocationBoxImg}
+            source={require('assets/imgs/mark.png')}
+          />
+          <Text style={styles.currentLocationBoxText}>CURRENT LOCATION</Text>
+        </TouchableOpacity>
+
+        {renderLocation()}
+      </View>
+    </ImageBackground>
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
