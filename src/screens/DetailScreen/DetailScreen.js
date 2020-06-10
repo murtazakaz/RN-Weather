@@ -6,16 +6,17 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import {color} from '../../theme';
 import {moderateScale} from 'react-native-size-matters';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import {_getWeatherByLocationHourly} from '../../services/weatherServices';
 import {storeWeatherHourly} from '../../store/actions';
 import {RenderByWeatherTypes} from './weatherIconsType';
 import {DetailStyle} from './DetailScreenStyles';
+
 export default function DetailScreen() {
   const [loading, setLoading] = useState(false);
   const weather = useSelector(state => state.weather);

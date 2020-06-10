@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Welcome Screen should renders correctly 1`] = `
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    Object {
+      "flex": 1,
+      "paddingHorizontal": 23.57142857142857,
+    }
+  }
+>
+  <Image
+    resizeMode="cover"
+    source={
+      Object {
+        "testUri": "../../../assets/imgs/bg.png",
+      }
+    }
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
+        undefined,
+      ]
+    }
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 172.85714285714283,
+        "paddingVertical": 23.57142857142857,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../assets/imgs/close.png",
+          }
+        }
+        style={
+          Object {
+            "height": 26.714285714285715,
+            "width": 26.714285714285715,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#ff2b57",
+          "borderRadius": 11,
+          "paddingHorizontal": 23.57142857142857,
+          "paddingVertical": 7.857142857142857,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#ffffff",
+            "fontSize": 18.857142857142858,
+          }
+        }
+      >
+        Live
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingHorizontal": 15.714285714285714,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "flex-start",
+          "backgroundColor": "rgba(0,0,0,0.1)",
+          "borderRadius": 11,
+          "flexDirection": "row",
+          "marginBottom": 62.857142857142854,
+          "opacity": 1,
+          "paddingHorizontal": 23.57142857142857,
+          "paddingVertical": 11,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../assets/imgs/mark.png",
+          }
+        }
+        style={
+          Object {
+            "height": 23.57142857142857,
+            "resizeMode": "contain",
+            "width": 31.428571428571427,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#ffffff",
+            "fontSize": 18.857142857142858,
+            "marginLeft": 7.857142857142857,
+          }
+        }
+      >
+        CURRENT LOCATION
+      </Text>
+    </View>
+    <Text
+      style={
+        Object {
+          "color": "#ffffff",
+          "fontSize": 55,
+        }
+      }
+    >
+      Couldn't get current location
+    </Text>
+  </View>
+</View>
+`;
