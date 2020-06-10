@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 
 import renderer from 'react-test-renderer';
 
-import WelcomeScreen from '../src/screens/Welcome/WelcomeScreen';
+import HomeScreen from '../src/screens/Home/HomeScreen';
 
 const middlewares = [];
 const mockStore = configureStore(middlewares);
@@ -22,13 +22,13 @@ const storeWeatherHourly = () => ({
   payload: INITIAL_STATE,
 });
 
-describe('Welcome Screen', () => {
+describe('Home Screen', () => {
   const store = mockStore(INITIAL_STATE);
 
   it('should renders correctly', async () => {
     const tree = renderer.create(
       <Provider store={store}>
-        <WelcomeScreen />
+        <HomeScreen />
       </Provider>,
     );
     const json = tree.toJSON();
@@ -38,7 +38,7 @@ describe('Welcome Screen', () => {
   it('getweather details', async () => {
     const tree = renderer.create(
       <Provider store={store}>
-        <WelcomeScreen />
+        <HomeScreen />
       </Provider>,
     );
     const json = tree.getInstance();
