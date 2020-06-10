@@ -1,0 +1,351 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Detail Screen should renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "flex": 1,
+      "paddingHorizontal": 23.57142857142857,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 15.714285714285714,
+        "paddingVertical": 23.57142857142857,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../assets/imgs/menu_medium.png",
+          }
+        }
+        style={
+          Object {
+            "height": 15.714285714285714,
+            "resizeMode": "stretch",
+            "width": 31.428571428571427,
+          }
+        }
+      />
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../assets/imgs/search_medium.png",
+          }
+        }
+        style={
+          Object {
+            "height": 23.57142857142857,
+            "resizeMode": "stretch",
+            "width": 23.57142857142857,
+          }
+        }
+      />
+    </View>
+  </View>
+  <RCTScrollView>
+    <View>
+      <View
+        style={Object {}}
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 0.6,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#013239",
+                  "fontSize": 31.428571428571427,
+                  "fontWeight": "600",
+                }
+              }
+            >
+               ,
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#013239",
+                  "fontSize": 31.428571428571427,
+                  "fontWeight": "600",
+                }
+              }
+            >
+               ,
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#8d8d8d",
+                  "fontSize": 18.857142857142858,
+                  "marginTop": 7.857142857142857,
+                }
+              }
+            >
+              Jun 10, 2020
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "flex-end",
+                "flex": 0.4,
+                "justifyContent": "flex-end",
+              }
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../assets/imgs/bg.png",
+                }
+              }
+              style={
+                Object {
+                  "borderRadius": 31.428571428571427,
+                  "height": 141.42857142857144,
+                  "overflow": "hidden",
+                  "width": 172.85714285714283,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#013239",
+              "borderRadius": 31.428571428571427,
+              "flexDirection": "row",
+              "height": 146.14285714285714,
+              "marginBottom": 70.71428571428572,
+              "marginTop": 62.857142857142854,
+              "paddingHorizontal": 23.57142857142857,
+              "paddingVertical": 7.857142857142857,
+            }
+          }
+        >
+          <RCTScrollView
+            data={Array []}
+            disableVirtualization={false}
+            getItem={[Function]}
+            getItemCount={[Function]}
+            horizontal={false}
+            initialNumToRender={10}
+            keyExtractor={[Function]}
+            maxToRenderPerBatch={10}
+            numColumns={5}
+            onContentSizeChange={[Function]}
+            onEndReachedThreshold={2}
+            onLayout={[Function]}
+            onMomentumScrollEnd={[Function]}
+            onScroll={[Function]}
+            onScrollBeginDrag={[Function]}
+            onScrollEndDrag={[Function]}
+            removeClippedSubviews={false}
+            renderItem={[Function]}
+            scrollEventThrottle={50}
+            stickyHeaderIndices={Array []}
+            updateCellsBatchingPeriod={50}
+            viewabilityConfigCallbackPairs={Array []}
+            windowSize={21}
+          >
+            <View />
+          </RCTScrollView>
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "#e6e6e6",
+              "borderBottomWidth": 1.5714285714285714,
+              "borderTopColor": "#e6e6e6",
+              "borderTopWidth": 1.5714285714285714,
+              "marginBottom": 23.57142857142857,
+              "paddingVertical": 28.285714285714285,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#013239",
+                "fontSize": 28.285714285714285,
+                "fontWeight": "600",
+                "marginBottom": 15.714285714285714,
+              }
+            }
+          >
+            Additional Info
+          </Text>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#8d8d8d",
+                    "fontSize": 22,
+                    "marginBottom": 7.857142857142857,
+                  }
+                }
+              >
+                Precipitation
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#013239",
+                    "fontSize": 25.142857142857142,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                3%
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#8d8d8d",
+                    "fontSize": 22,
+                    "marginBottom": 7.857142857142857,
+                  }
+                }
+              >
+                Humidity
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#013239",
+                    "fontSize": 25.142857142857142,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                 %
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#8d8d8d",
+                    "fontSize": 22,
+                    "marginBottom": 7.857142857142857,
+                  }
+                }
+              >
+                Windly
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#013239",
+                    "fontSize": 25.142857142857142,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                 km/h
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <Text
+            style={
+              Object {
+                "color": "#013239",
+                "fontSize": 25.142857142857142,
+                "fontWeight": "600",
+                "marginBottom": 15.714285714285714,
+              }
+            }
+          >
+            Temperature
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
