@@ -1,0 +1,27 @@
+// @flow
+import React from 'react';
+import {View, Text} from 'react-native';
+import PropTypes from 'prop-types';
+
+import {{properCase name }}Component from './{{properCase name }}Component';
+import {styles} from './{{properCase name }}.styles.js';
+
+export class {{properCase name}}Container extends React.Component {
+constructor(props){
+super(props);
+this.state = {}
+}
+render(){
+<{{properCase name}}Component {...this.state} {...this.props} />
+}
+}
+
+{{pascalCase name}}Container.defaultProps = {
+
+};
+
+{{pascalCase name}}Container.propTypes = {
+
+};
+
+export default {{properCase name}}Container;
