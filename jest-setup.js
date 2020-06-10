@@ -40,3 +40,5 @@ jest.mock('react-navigation-hooks', () => ({
     jest.requireActual('react-navigation-hooks').useNavigationParam,
   ),
 }));
+
+jest.setTimeout(30000);

@@ -132,6 +132,7 @@ exports[`Detail Screen should renders correctly 1`] = `
                 Object {
                   "color": "#8d8d8d",
                   "fontSize": 18.857142857142858,
+                  "marginHorizontal": 7.857142857142857,
                   "marginTop": 7.857142857142857,
                 }
               }
@@ -185,7 +186,7 @@ exports[`Detail Screen should renders correctly 1`] = `
             getItem={[Function]}
             getItemCount={[Function]}
             horizontal={false}
-            initialNumToRender={10}
+            initialNumToRender={5}
             keyExtractor={[Function]}
             maxToRenderPerBatch={10}
             numColumns={5}
@@ -343,6 +344,14 @@ exports[`Detail Screen should renders correctly 1`] = `
           >
             Temperature
           </Text>
+          <View
+            style={
+              Object {
+                "height": 200,
+                "paddingVertical": 10,
+              }
+            }
+          />
         </View>
       </View>
     </View>

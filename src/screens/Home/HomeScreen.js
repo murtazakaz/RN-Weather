@@ -28,7 +28,6 @@ export default function HomeScreen() {
     async function checkForPermissions() {
       // You can await here
       let isGranted = await requestAndroidPermission();
-      console.log('permission', isGranted);
 
       if (isGranted || Platform.OS == 'ios') {
         getCurrentLocation();
@@ -54,7 +53,6 @@ export default function HomeScreen() {
         getLocation(location);
       },
       error => {
-        console.log('err', error);
         setLoading(false);
       },
     );
@@ -69,7 +67,6 @@ export default function HomeScreen() {
   ]);
 
   function renderLocation() {
-    console.log('renderLocation', weather);
     if (loading) {
       return <Text style={HomeStyles.heading}>Loading</Text>;
     } else if (!location || !weather) {

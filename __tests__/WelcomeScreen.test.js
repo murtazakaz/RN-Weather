@@ -3,7 +3,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import renderer from 'react-test-renderer';
+import renderer, {act} from 'react-test-renderer';
 
 import HomeScreen from '../src/screens/Home/HomeScreen';
 
@@ -35,13 +35,16 @@ describe('Home Screen', () => {
     expect(json).toMatchSnapshot();
   });
 
-  it('getweather details', async () => {
+  it('getweather details', async done => {
     const tree = renderer.create(
       <Provider store={store}>
         <HomeScreen />
       </Provider>,
     );
-    const json = tree.getInstance();
+    act(() => {
+      const json = tree.getInstance();
+      setImmediate(done);
+    });
   });
 
   it('storeWeatherHourly', () => {

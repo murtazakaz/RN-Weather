@@ -23,6 +23,7 @@ const INITIAL_STATE = {
       speed: '',
     },
   },
+  weatherHourly: [],
 };
 
 const updateLocation = () => ({

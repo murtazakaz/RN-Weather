@@ -1,6 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {Text, View, Image, TouchableOpacity, FlatList} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {
+  Text,
+  ScrollView,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import {_getWeatherByLocationHourly} from '../../services/weatherServices';
