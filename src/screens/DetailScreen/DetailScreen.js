@@ -1,34 +1,68 @@
-import React, {Component, useState, useEffect, useCallback} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {color} from '../../theme';
-import {moderateScale} from 'react-native-size-matters';
+import React, {useState, useEffect, useCallback} from 'react';
+import {Text, View, Image, TouchableOpacity, FlatList} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import {_getWeatherByLocationHourly} from '../../services/weatherServices';
 import {storeWeatherHourly} from '../../store/actions';
-import {RenderByWeatherTypes} from './weatherIconsType';
+import {RenderByWeatherTypes} from './components/weatherIconsType';
 import {DetailStyle} from './DetailScreenStyles';
+import {StackedAreaChart} from 'react-native-svg-charts';
+import * as shape from 'd3-shape';
+import {useNavigation} from 'react-navigation-hooks';
+//functional components with hooks
 export default function DetailScreen() {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigation();
   const weather = useSelector(state => state.weather);
   const location = useSelector(state => state.location);
   const weatherHourly = useSelector(state => state.weatherHourly);
+  const [date] = useState(moment().format('MMM DD, YYYY'));
   const dispatch = useDispatch();
-  const [date, setDate] = useState(moment().format('MMM DD, YYYY'));
+
+  const [dataMaxMin, setDataMaxMin] = useState([]);
+  const colors = ['#ffa134', '#ffd9b1'];
+  const keys = ['max', 'min'];
+  // const dataMaxMin = [
+  //   {
+  //     date: '06-06-2020',
+  //     max: '30',
+  //     min: '20',
+  //   },
+  //   {
+  //     date: '07-06-2020',
+  //     max: '32',
+  //     min: '18',
+  //   },
+  //   {
+  //     date: '08-06-2020',
+  //     max: '34',
+  //     min: '19',
+  //   },
+  //   {
+  //     date: '09-06-2020',
+  //     max: '33',
+  //     min: '18',
+  //   },
+  //   {
+  //     date: '010-06-2020',
+  //     max: '28',
+  //     min: '15',
+  //   },
+  // ];
+
+  const svgs = [
+    {onPress: () => console.log('apples')},
+    {onPress: () => console.log('bananas')},
+    {onPress: () => console.log('cherries')},
+    {onPress: () => console.log('dates')},
+  ];
 
   useEffect(() => {
     async function getWeatherHourly() {
       let hourlyWeather = await _getWeatherByLocationHourly(location);
-      console.log('_getWeatherByLocationHourly', hourlyWeather);
-      setWeatherHourly(hourlyWeather);
+      if (hourlyWeather) {
+        setWeatherHourly(hourlyWeather.daily);
+      }
     }
 
     getWeatherHourly();
@@ -40,189 +74,90 @@ export default function DetailScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => {}}>
+    <View style={DetailStyle.container}>
+      <View style={DetailStyle.header}>
+        <TouchableOpacity
+          onPress={() => {
+            navigate.goBack();
+          }}>
           <Image
-            style={styles.menuImg}
+            style={DetailStyle.menuImg}
             source={require('assets/imgs/menu_medium.png')}
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}}>
           <Image
-            style={styles.searchImg}
+            style={DetailStyle.searchImg}
             source={require('assets/imgs/search_medium.png')}
           />
         </TouchableOpacity>
       </View>
       <ScrollView>
-        <View style={styles.content}>
-          <View style={styles.countryBox}>
-            <View style={styles.countryNameBox}>
-              <Text style={styles.title}>{` ${weather.name},`}</Text>
-              <Text style={styles.title}>{` ${weather.sys.country},`}</Text>
-              <Text style={styles.subTitle}>{date}</Text>
+        <View style={DetailStyle.content}>
+          <View style={DetailStyle.countryBox}>
+            <View style={DetailStyle.countryNameBox}>
+              <Text style={DetailStyle.title}>{` ${weather.name},`}</Text>
+              <Text style={DetailStyle.title}>{` ${
+                weather.sys.country
+              },`}</Text>
+              <Text style={DetailStyle.subTitle}>{date}</Text>
             </View>
-            <View style={styles.countryImgBox}>
+            <View style={DetailStyle.countryImgBox}>
               <Image
-                style={styles.countryImg}
+                style={DetailStyle.countryImg}
                 source={require('assets/imgs/bg.png')}
               />
             </View>
           </View>
-          <View style={styles.dayWeather}>
+          <View style={DetailStyle.dayWeather}>
             <FlatList
-              data={weatherHourly ? weatherHourly.daily : []}
+              data={weatherHourly.slice(0, 5)}
               numColumns={5}
-              renderItem={(item, index) => {
-                return <RenderByWeatherTypes data={item} index={index} />;
+              initialNumToRender={5}
+              renderItem={item => {
+                return <RenderByWeatherTypes data={item} />;
               }}
             />
           </View>
-          <View style={styles.additionalInfoBox}>
-            <Text style={styles.additionalTitle}>Additional Info</Text>
-            <View style={styles.additionalDetailBox}>
-              <View style={styles.additionalDetail}>
-                <Text style={styles.additionalDetailSubTitle}>
+          <View style={DetailStyle.additionalInfoBox}>
+            <Text style={DetailStyle.additionalTitle}>Additional Info</Text>
+            <View style={DetailStyle.additionalDetailBox}>
+              <View style={DetailStyle.additionalDetail}>
+                <Text style={DetailStyle.additionalDetailSubTitle}>
                   Precipitation
                 </Text>
-                <Text style={styles.additionalDetailText}>3%</Text>
+                <Text style={DetailStyle.additionalDetailText}>3%</Text>
               </View>
-              <View style={styles.additionalDetail}>
-                <Text style={styles.additionalDetailSubTitle}>Humidity</Text>
-                <Text style={styles.additionalDetailText}>{`${
+              <View style={DetailStyle.additionalDetail}>
+                <Text style={DetailStyle.additionalDetailSubTitle}>
+                  Humidity
+                </Text>
+                <Text style={DetailStyle.additionalDetailText}>{`${
                   weather.main.humidity
                 } %`}</Text>
               </View>
-              <View style={styles.additionalDetail}>
-                <Text style={styles.additionalDetailSubTitle}>Windly</Text>
-                <Text style={styles.additionalDetailText}>{`${
+              <View style={DetailStyle.additionalDetail}>
+                <Text style={DetailStyle.additionalDetailSubTitle}>Windly</Text>
+                <Text style={DetailStyle.additionalDetailText}>{`${
                   weather.wind.speed
                 } km/h`}</Text>
               </View>
             </View>
           </View>
-          <View style={styles.temperatureBox}>
-            <Text style={styles.temperatureTitle}>Temperature</Text>
+          <View style={DetailStyle.temperatureBox}>
+            <Text style={DetailStyle.temperatureTitle}>Temperature</Text>
+            <StackedAreaChart
+              style={{height: 200, paddingVertical: 10}}
+              data={dataMaxMin}
+              keys={keys}
+              colors={colors}
+              curve={shape.curveNatural}
+              showGrid={false}
+              svgs={svgs}
+            />
           </View>
         </View>
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.palette.white,
-    paddingHorizontal: moderateScale(15),
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: moderateScale(15),
-    marginBottom: moderateScale(10),
-  },
-  menuImg: {
-    height: moderateScale(10),
-    width: moderateScale(20),
-    resizeMode: 'stretch',
-  },
-  searchImg: {
-    height: moderateScale(15),
-    width: moderateScale(15),
-    resizeMode: 'stretch',
-  },
-  content: {},
-  countryBox: {flexDirection: 'row'},
-  countryNameBox: {
-    flex: 0.6,
-  },
-  countryImgBox: {
-    flex: 0.4,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-  },
-  countryImg: {
-    height: moderateScale(90),
-    width: moderateScale(110),
-    overflow: 'hidden',
-    borderRadius: moderateScale(20),
-  },
-  title: {
-    color: color.palette.ThemeCoralCandy,
-    fontSize: moderateScale(20),
-    fontWeight: '600',
-  },
-  subTitle: {
-    color: color.palette.ThemeGray,
-    fontSize: moderateScale(12),
-    marginTop: moderateScale(5),
-  },
-  dayWeather: {
-    flexDirection: 'row',
-    height: moderateScale(93),
-    borderRadius: moderateScale(20),
-    backgroundColor: color.palette.ThemeCoralCandy,
-    marginTop: moderateScale(40),
-    marginBottom: moderateScale(45),
-    paddingVertical: moderateScale(5),
-    paddingHorizontal: moderateScale(15),
-  },
-  wetherDetail: {
-    // alignItems: 'center',
-    justifyContent: 'space-evenly',
-    height: moderateScale(80),
-    borderRadius: moderateScale(20),
-    flex: 1,
-  },
-  wetherTimeText: {
-    color: color.palette.white,
-  },
-  wetherImg: {
-    height: moderateScale(26),
-    width: moderateScale(26),
-    resizeMode: 'stretch',
-    marginVertical: moderateScale(7),
-  },
-  wetherTemperature: {
-    color: color.palette.white,
-  },
-  additionalInfoBox: {
-    borderTopColor: color.palette.offWhite,
-    borderTopWidth: moderateScale(1),
-    borderBottomColor: color.palette.offWhite,
-    borderBottomWidth: moderateScale(1),
-    paddingVertical: moderateScale(18),
-    marginBottom: moderateScale(15),
-  },
-  additionalTitle: {
-    color: color.palette.ThemeCoralCandy,
-    fontSize: moderateScale(18),
-    fontWeight: '600',
-    marginBottom: moderateScale(10),
-  },
-  additionalDetailBox: {
-    flexDirection: 'row',
-  },
-  additionalDetail: {
-    flex: 1,
-  },
-  additionalDetailSubTitle: {
-    color: color.palette.ThemeGray,
-    fontSize: moderateScale(14),
-    marginBottom: moderateScale(5),
-  },
-  additionalDetailText: {
-    color: color.palette.ThemeCoralCandy,
-    fontSize: moderateScale(16),
-    fontWeight: '600',
-  },
-  temperatureTitle: {
-    color: color.palette.ThemeCoralCandy,
-    fontSize: moderateScale(16),
-    fontWeight: '600',
-    marginBottom: moderateScale(10),
-  },
-});

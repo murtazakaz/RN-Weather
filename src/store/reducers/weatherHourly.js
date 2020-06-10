@@ -1,4 +1,4 @@
-const initialState = null;
+const initialState = [];
 
 export const weatherHourly = (state = initialState, action) => {
   switch (action.type) {

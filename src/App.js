@@ -1,14 +1,16 @@
 import React, {useEffect} from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, SafeAreaView} from 'react-native';
 import {Provider} from 'react-redux';
+
 import {enableScreens} from 'react-native-screens';
 import SplashScreen from 'react-native-splash-screen';
 
 enableScreens();
 
-import Store from './store/store';
+import {store, persistor} from './store/store';
 import {Text} from './components';
 import AppContainer from './navigation/rootNavigation';
+import {PersistGate} from 'redux-persist/integration/react';
 
 export class HomeScreen extends React.Component {
   render() {
@@ -46,8 +48,12 @@ const App = () => {
   }, []);
 
   return (
-    <Provider store={Store}>
-      <AppContainer />
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <SafeAreaView style={{flex: 1}}>
+          <AppContainer />
+        </SafeAreaView>
+      </PersistGate>
     </Provider>
   );
 };

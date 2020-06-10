@@ -1,13 +1,23 @@
-import {createStore, applyMiddleware, compose} from 'redux';
-import promise from 'redux-promise';
+import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
-
 import RootReducer from './reducers';
+import {persistStore, persistReducer} from 'redux-persist';
+import SQLiteStorage from 'redux-persist-sqlite-storage';
+import SQLite from 'react-native-sqlite-storage';
 
-const middleware = applyMiddleware(thunk, promise, logger);
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const config = {
+  name: 'enc123',
+  location: 'default',
+};
 
-const Store = createStore(RootReducer, composeEnhancers(middleware));
+const storeEngine = SQLiteStorage(SQLite, config);
 
-export default Store;
+const persistConfig = {
+  key: 'root',
+  storage: storeEngine,
+};
+
+const persistedReducer = persistReducer(persistConfig, RootReducer);
+
+export const store = createStore(persistedReducer, applyMiddleware(thunk));
+export const persistor = persistStore(store);

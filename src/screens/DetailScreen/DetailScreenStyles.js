@@ -50,6 +50,7 @@ export const DetailStyle = StyleSheet.create({
     color: color.palette.ThemeGray,
     fontSize: moderateScale(12),
     marginTop: moderateScale(5),
+    marginHorizontal: moderateScale(5),
   },
   dayWeather: {
     flexDirection: 'row',

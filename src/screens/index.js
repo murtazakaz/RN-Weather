@@ -1,10 +1,10 @@
-import WelcomeScreen from './Welcome/WelcomeScreen';
+import HomeScreen from './Home/HomeScreen';
 import DetailScreen from './DetailScreen/DetailScreen';
 
 /* PLOP_INJECT_IMPORT */
 
 export {
-  WelcomeScreen,
   DetailScreen,
+  HomeScreen,
   /* PLOP_INJECT_EXPORT */
 };
