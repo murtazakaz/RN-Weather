@@ -16,6 +16,7 @@ import {DetailStyle} from './DetailScreenStyles';
 import {StackedAreaChart} from 'react-native-svg-charts';
 import * as shape from 'd3-shape';
 import {useNavigation} from 'react-navigation-hooks';
+import {showToast} from '../../utils/toast';
 //functional components with hooks
 export default function DetailScreen() {
   const navigate = useNavigation();
@@ -28,39 +29,9 @@ export default function DetailScreen() {
   const [dataMaxMin, setDataMaxMin] = useState([]);
   const colors = ['#ffa134', '#ffd9b1'];
   const keys = ['max', 'min'];
-  // const dataMaxMin = [
-  //   {
-  //     date: '06-06-2020',
-  //     max: '30',
-  //     min: '20',
-  //   },
-  //   {
-  //     date: '07-06-2020',
-  //     max: '32',
-  //     min: '18',
-  //   },
-  //   {
-  //     date: '08-06-2020',
-  //     max: '34',
-  //     min: '19',
-  //   },
-  //   {
-  //     date: '09-06-2020',
-  //     max: '33',
-  //     min: '18',
-  //   },
-  //   {
-  //     date: '010-06-2020',
-  //     max: '28',
-  //     min: '15',
-  //   },
-  // ];
-
   const svgs = [
-    {onPress: () => console.log('apples')},
-    {onPress: () => console.log('bananas')},
-    {onPress: () => console.log('cherries')},
-    {onPress: () => console.log('dates')},
+    {onPress: () => showToast('min')},
+    {onPress: () => showToast('max')},
   ];
 
   useEffect(() => {
@@ -68,6 +39,18 @@ export default function DetailScreen() {
       let hourlyWeather = await _getWeatherByLocationHourly(location);
       if (hourlyWeather) {
         setWeatherHourly(hourlyWeather.daily);
+        let minMaxTemp = [];
+
+        hourlyWeather.daily.map((item, index) => {
+          minMaxTemp.push({
+            date: moment(new Date(date))
+              .add(index, 'days')
+              .format('DD-MM-YYYY'),
+            max: item.temp.max,
+            min: item.temp.min,
+          });
+        });
+        setDataMaxMin(minMaxTemp);
       }
     }
 
@@ -153,7 +136,7 @@ export default function DetailScreen() {
           <View style={DetailStyle.temperatureBox}>
             <Text style={DetailStyle.temperatureTitle}>Temperature</Text>
             <StackedAreaChart
-              style={{height: 200, paddingVertical: 10}}
+              style={{height: 180, paddingVertical: 10}}
               data={dataMaxMin}
               keys={keys}
               colors={colors}

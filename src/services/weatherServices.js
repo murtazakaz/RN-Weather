@@ -10,7 +10,6 @@ export const _getWeatherByLocation = location => {
     method: 'GET',
   };
 
-  console.log(config.BASE_WEATHER_URL, route, method);
   return fetchAPI(config.BASE_WEATHER_URL, route, method);
 };
 
@@ -23,6 +22,5 @@ export const _getWeatherByLocationHourly = location => {
     method: 'GET',
   };
 
-  console.log(config.BASE_WEATHER_URL, route, method);
   return fetchAPI(config.BASE_WEATHER_URL, route, method);
 };
